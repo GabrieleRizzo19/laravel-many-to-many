@@ -11,6 +11,16 @@
                         <div class="card-body">
                         <h5 class="card-title text-uppercase fw-bold">{{ $project['title'] }}</h5>
                         <p class="card-text"><span class="fw-bold">Tipo: </span>{{ $project->type->name }}</p>
+                        <p class="card-text">
+                            <span class="fw-bold">Tecnologia usata:</span>
+                            @foreach ($project->technology as $technology)
+                                @if($loop->last)
+                                    {{ $technology->name }}
+                                @else
+                                    {{ $technology->name }},
+                                @endif
+                            @endforeach
+                        <p>
                         <a href="{{ route('admin.projects.show', $project) }}" class="btn btn-primary">Dettagli</a>
                         </div>
                     </div>
