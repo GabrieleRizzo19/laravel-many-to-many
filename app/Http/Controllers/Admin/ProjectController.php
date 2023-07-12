@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Technology;
 use App\Models\Type;
 
 class ProjectController extends Controller
@@ -33,7 +34,8 @@ class ProjectController extends Controller
     public function create()
     {
         $data = [
-            'typeArray' => Type::all()
+            'typeArray' => Type::all(),
+            'technologyArray' => Technology::all()
         ];
 
         return view('admin.projects.create', $data);
@@ -52,6 +54,8 @@ class ProjectController extends Controller
         $newProject = new Project();
         $newProject->fill($data);
         $newProject->save();
+
+        $newProject->technology()->attach($data['technology']);
 
         return to_route('admin.projects.show', $newProject);
     }
@@ -82,6 +86,7 @@ class ProjectController extends Controller
     {
         $data = [
             'typeArray' => Type::all(),
+            'technologyArray' => Technology::all(),
             'project' => $project
         ];
 
@@ -101,6 +106,8 @@ class ProjectController extends Controller
 
         $project->fill($data);
         $project->update();
+
+        $project->technology()->sync($data['technology']);
 
         return to_route('admin.projects.show', compact('project'));
 

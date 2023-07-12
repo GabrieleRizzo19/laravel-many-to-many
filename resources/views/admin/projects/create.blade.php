@@ -42,6 +42,18 @@
                     <div class="text-danger mb-3">{{ $message }}</div>
                 @enderror
 
+                <span>Tecnologia usata:</span>
+                <div class="d-block btn-group mb-3" role="group">
+                    @foreach ($technologyArray as $i => $technology)
+                        {{-- NON VA IL CHECKED --}}
+                        <input type="checkbox" value="{{$technology->id}}" class="btn-check" id="technology{{$i}}" name="technology[]" @checked(old('technology{{$i}}') == $technology->id)>
+                        <label class="btn btn-outline-primary" for="technology{{$i}}">{{$technology->name}}</label>
+                    @endforeach
+                </div>
+                @error('technology')
+                    <div class="text-danger mb-3">{{ $message }}</div>
+                @enderror
+
                 <label for="image">URL Immagine</label>
                 <input class="form-control mb-3" type="text" name="image" id="image" value="{{ old('image') }}">
                 @error('image')

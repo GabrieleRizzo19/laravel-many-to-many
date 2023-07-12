@@ -24,10 +24,11 @@ class StoreProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|min:5|max:30',
+            'title' => 'required|unique:projects|min:5|max:30',
             'description' => 'max:65535',
             'type_id' => 'required',
-            'image' => 'url|max:255'
+            'image' => 'url|max:255',
+            'technology' => 'required|exists:technologies,id'
         ];
     }
 
@@ -42,10 +43,13 @@ class StoreProjectRequest extends FormRequest
             'title.required' => 'Il titolo  è obbligatorio',
             'title.min' => 'Il titolo deve avere almeno 5 caratteri',
             'title.max' => 'Il titolo non può essere più lungo di 30 caratteri',
+            'title.unique'=> 'Esiste già un progetto con questo titolo',
             'description.max' => 'La descrizione non può avere più di 65535 caratteri',
             'type_id' => 'Il tipo è richiesto',
             'image.url' => "L'url per l'immagine non è valido",
-            'image.max' => "L'url per l'immagine è troppo lungo"
+            'image.max' => "L'url per l'immagine è troppo lungo",
+            'technology.required' => 'Seleziona almeno una tecnologia',
+            'technology.exists' => 'ERRORE! Riseleziona le tecnologie'
         ];
     }
 }

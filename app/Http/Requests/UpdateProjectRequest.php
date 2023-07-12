@@ -27,7 +27,8 @@ class UpdateProjectRequest extends FormRequest
             'title' => 'required|min:5|max:30',
             'description' => 'max:65535',
             'type_id' => 'required',
-            'image' => 'url|max:255'
+            'image' => 'url|max:255',
+            'technology' => 'required|exists:technologies,id'
         ];
     }
 
@@ -45,7 +46,9 @@ class UpdateProjectRequest extends FormRequest
             'description.max' => 'La descrizione non può avere più di 65535 caratteri',
             'type_id' => 'Il tipo è richiesto',
             'image.url' => "L'url per l'immagine non è valido",
-            'image.max' => "L'url per l'immagine è troppo lungo"
+            'image.max' => "L'url per l'immagine è troppo lungo",
+            'technology.required' => 'Seleziona almeno una tecnologia',
+            'technology.exists' => 'ERRORE! Riseleziona le tecnologie'
         ];
     }
 }
