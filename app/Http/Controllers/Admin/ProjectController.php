@@ -8,6 +8,7 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Technology;
 use App\Models\Type;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -51,6 +52,9 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
 
+        $imgPath = Storage::put('uploads', $data['image']);
+        $data['image'] = $imgPath;
+
         $newProject = new Project();
         $newProject->fill($data);
         $newProject->save();
@@ -84,10 +88,13 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $projectTechnology = $project->technology->pluck('id')->toArray();
+
         $data = [
+            'project' => $project,
             'typeArray' => Type::all(),
             'technologyArray' => Technology::all(),
-            'project' => $project
+            'projectTechnology' => $projectTechnology 
         ];
 
         return view('admin.projects.edit', $data);
@@ -103,6 +110,9 @@ class ProjectController extends Controller
     public function update(UpdateProjectRequest $request, Project $project)
     {
         $data = $request->validated();
+
+        $imgPath = Storage::put('uploads', $data['image']);
+        $data['image'] = $imgPath;
 
         $project->fill($data);
         $project->update();

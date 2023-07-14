@@ -16,7 +16,7 @@
                 </ul>
                 
             @endif
-            <form action="{{ route('admin.projects.store') }}" method="POST">
+            <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
             
                 <label for="title">Titolo</label>
@@ -46,7 +46,7 @@
                 <div class="d-block btn-group mb-3" role="group">
                     @foreach ($technologyArray as $i => $technology)
                         {{-- NON VA IL CHECKED --}}
-                        <input type="checkbox" value="{{$technology->id}}" class="btn-check" id="technology{{$i}}" name="technology[]" @checked(old('technology{{$i}}') == $technology->id)>
+                        <input type="checkbox" value="{{$technology->id}}" class="btn-check" id="technology{{$i}}" name="technology[]" @checked(old('technology') ? in_array($technology['id'], old('technology')) : '')>
                         <label class="btn btn-outline-primary" for="technology{{$i}}">{{$technology->name}}</label>
                     @endforeach
                 </div>
@@ -54,8 +54,8 @@
                     <div class="text-danger mb-3">{{ $message }}</div>
                 @enderror
 
-                <label for="image">URL Immagine</label>
-                <input class="form-control mb-3" type="text" name="image" id="image" value="{{ old('image') }}">
+                <label for="image">Immagine</label>
+                <input class="form-control mb-3" type="file" name="image" id="image">
                 @error('image')
                     <div class="text-danger mb-3">{{ $message }}</div>
                 @enderror

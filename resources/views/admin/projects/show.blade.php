@@ -30,7 +30,7 @@
                 @endforeach
             </h5>
             <p>{{ $project['description'] }}</p>
-            <img src="{{ $project['image'] }}" alt="">
+            <img src="{{ asset('storage/' . $project->image)}}" alt="">
         </div>
     </div>
 

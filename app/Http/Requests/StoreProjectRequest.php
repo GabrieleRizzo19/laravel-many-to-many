@@ -27,7 +27,7 @@ class StoreProjectRequest extends FormRequest
             'title' => 'required|unique:projects|min:5|max:30',
             'description' => 'max:65535',
             'type_id' => 'required',
-            'image' => 'url|max:255',
+            'image' => 'image|max:10240',
             'technology' => 'required|exists:technologies,id'
         ];
     }
@@ -46,8 +46,8 @@ class StoreProjectRequest extends FormRequest
             'title.unique'=> 'Esiste già un progetto con questo titolo',
             'description.max' => 'La descrizione non può avere più di 65535 caratteri',
             'type_id' => 'Il tipo è richiesto',
-            'image.url' => "L'url per l'immagine non è valido",
-            'image.max' => "L'url per l'immagine è troppo lungo",
+            'image.image' => "Il file inserito non è di tipo immagine",
+            'image.max' => "L'immagine caricata supera i 10MB massimi",
             'technology.required' => 'Seleziona almeno una tecnologia',
             'technology.exists' => 'ERRORE! Riseleziona le tecnologie'
         ];

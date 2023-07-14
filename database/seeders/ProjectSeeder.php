@@ -42,7 +42,8 @@ class ProjectSeeder extends Seeder
 
             $newProject->title = $faker->words(3,true);
             $newProject->description = $faker->paragraph();
-            $newProject->image = $faker->imageUrl(640, 480, null, true);
+            $randNum = rand(1,3);
+            $newProject->image = "placeholders/$randNum.png";
             $newProject->type_id = $faker->randomElement($type_ids);
             $newProject->save();
 

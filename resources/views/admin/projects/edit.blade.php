@@ -7,16 +7,7 @@
 
             <h1 class="text-center">MODIFICA IL PROGETTO</h1>
 
-            @if ($errors->any())
-
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        {{ $error }}
-                    @endforeach
-                </ul>
-                
-            @endif
-            <form action="{{ route('admin.projects.update', $project) }}" method="POST" class="needs-validation">
+            <form action="{{ route('admin.projects.update', $project) }}" method="POST" class="needs-validation" enctype="multipart/form-data">
                 @csrf
 
                 @method('PUT')
@@ -48,16 +39,16 @@
                 <div class="d-block btn-group mb-3" role="group">
                     @foreach ($technologyArray as $i => $technology)
                         {{-- NON VA IL CHECKED --}}
-                        <input type="checkbox" value="{{$technology->id}}" class="btn-check" id="technology{{$i}}" name="technology[]">
-                        <label class="btn btn-outline-primary" for="technology{{$i}}">{{$technology->name}}</label>
+                        <input type="checkbox" value="{{$technology['id']}}" class="btn-check" id="technology{{$i}}" name="technology[]" @checked(old('technology') ? in_array($technology['id'], old('technology')) : in_array($technology['id'], $projectTechnology) ) >
+                        <label class="btn btn-outline-primary" for="technology{{$i}}">{{$technology['name']}}</label>
                     @endforeach
                 </div>
                 @error('technology')
                     <div class="text-danger mb-3">{{ $message }}</div>
                 @enderror
 
-                <label for="image">URL Immagine</label>
-                <input class="form-control mb-3" type="text" name="image" id="image" value="{{ $project['image'] }}">
+                <label for="image">Immagine</label>
+                <input class="form-control mb-3" type="file" name="image" id="image">
                 @error('image')
                     <div class="text-danger mb-3">{{ $message }}</div>
                 @enderror
